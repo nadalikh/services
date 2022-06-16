@@ -29,24 +29,32 @@ function getVoicesForReceiver($receiverCid){
 
 }
 
-function getVoiceMailFromFile($reciver){
-    $voiceInfos = array();
-    exec("cat /var/www/html/mySweetVoices/default/");
-
+function getVoiceMailInfoFromFile(&$receiverCid, &$voicemail, &$voiceInfos){
+    exec("cat /var/www/html/mySweetVoices/default/".$receiverCid."/INBOX" .
+        explode('.', $voicemail)[0].
+        "txt",
+    $voiceInfos);
+    return $voiceInfos;
 }
 
 function addVoiceMail($receiver, $voicemail){
     global $db;
-    //get voicemail infos.
-
-
-    $db->query("insert into voicemail (path, sender, reciver, date) values");
+    $voiceInfos = array();
+    //get voicemail infos
+    getVoiceMailInfoFromFile($receiver, $voicemail, $voiceInfos);
+    /*
+     * $path = ...
+     * $sender = ....
+     * $receiver = ...
+     * $date = ...
+     */
+    $db->query("insert into voicemail (path, sender, receiver, date) values");
     //at the end $map_receiversVoices needs to be updated.
 }
-function getNewVoiceFromReceiver($reciver){
-
-}
-function getNewDirForRecivers(){
+//function getNewVoiceFromReceiver($reciver){
+//
+//}
+function updateNewVoices(){
     global $map_receiversVoices;
     $receivers = array();
     exec("ls /var/www/html/mySweetVoices/default/", $receivers);
@@ -64,8 +72,5 @@ getReceiversWithTheirVoicesMap();
 
 while(true){
     sleep(3);
-    getNewDirForRecivers();
-//    foreach($map_receiversVoices as $voicesFromReceiver)
-//        getNewVoiceFromReceiver($);
-
+    updateNewVoices();
 } 
