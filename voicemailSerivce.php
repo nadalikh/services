@@ -42,13 +42,14 @@ function addVoiceMail($receiver, $voicemail){
     $voiceInfos = array();
     //get voicemail infos
     getVoiceMailInfoFromFile($receiver, $voicemail, $voiceInfos);
+    var_dump($voiceInfos);
     /*
      * $path = ...
      * $sender = ....
      * $receiver = ...
      * $date = ...
      */
-    $db->query("insert into voicemail (path, sender, receiver, date) values");
+//    $db->query("insert into voicemail (path, sender, receiver, date) values");
     //at the end $map_receiversVoices needs to be updated.
 }
 //function getNewVoiceFromReceiver($reciver){
