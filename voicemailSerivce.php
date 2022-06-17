@@ -32,7 +32,7 @@ function getVoicesForReceiver($receiverCid){
 }
 
 function getVoiceMailInfoFromFile(&$receiverCid, &$voicemail, &$voiceInfos){
-    exec("cat /var/www/html/mySweetVoices/default/".$receiverCid."/INBOX" .
+    exec("cat /var/www/html/mySweetVoices/default/".$receiverCid."/INBOX/" .
         explode('.', $voicemail)[0].
         ".txt",
     $voiceInfos);
