@@ -44,13 +44,17 @@ function addVoiceMail($receiver, $voicemail){
     $voiceInfos = array();
     //get voicemail infos
     getVoiceMailInfoFromFile($receiver, $voicemail, $voiceInfos);
-    $sender = explode("-",explode("/",$voiceInfos[10]))[0];
-    $date = explode("=", $voiceInfos[12])[1];
-    $duration = explode('=', $voiceInfos[17])[1];
-    echo "sender : ". $sender."\n";
-    echo "date : ". $date."\n";
-    echo "receiver : ". $receiver."\n";
-    echo "duration : ". $duration."\n";
+    echo $voiceInfos[10]."\n";
+    echo $voiceInfos[12]."\n";
+    echo $voiceInfos[17]."\n";
+
+//    $sender = explode("-",explode("/",$voiceInfos[10]))[0];
+//    $date = explode("=", $voiceInfos[12])[1];
+//    $duration = explode('=', $voiceInfos[17])[1];
+//    echo "sender : ". $sender."\n";
+//    echo "date : ". $date."\n";
+//    echo "receiver : ". $receiver."\n";
+//    echo "duration : ". $duration."\n";
     /*
      * path = voicemail
      * $sender = ....
