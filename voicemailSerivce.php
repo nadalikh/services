@@ -25,6 +25,8 @@ function getReceiversWithTheirVoicesMap(){
 function getVoicesForReceiver($receiverCid){
     $voices = array();
     exec("ls /var/www/html/mySweetVoices/default/".$receiverCid."/INBOX/*.wav", $voices);
+    foreach ($voices as &$voice)
+        $voice = basename($voice);
     return $voices;
 
 }
