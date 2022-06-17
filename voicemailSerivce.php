@@ -74,6 +74,6 @@ function updateNewVoices(){
 getReceiversWithTheirVoicesMap();
 
 while(true){
-    sleep(30);
     updateNewVoices();
-} 
+    sleep(30);
+}
