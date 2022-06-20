@@ -27,8 +27,7 @@ function getVoicesForReceiver($receiverCid){
     exec("ls /var/www/html/mySweetVoices/default/".$receiverCid."/INBOX/*.wav", $voices);
     foreach ($voices as &$voice)
         $voice = basename($voice);
-    echo "what recive from getVoicesForReceiver\n";
-    var_dump($voices);
+//checked
     return $voices;
 
 }
@@ -64,14 +63,16 @@ function updateNewVoices(){
     global $map_receiversVoices;
     $receivers = array();
     exec("ls /var/www/html/mySweetVoices/default/", $receivers);
-    foreach ($receivers as $receiver)
-        foreach (getVoicesForReceiver($receiver) as $voicemail) {
+    foreach ($receivers as $receiver) {
+        $t = getVoicesForReceiver($receiver);
+        foreach ($t as $voicemail) {
             echo "proccess $voicemail\n";
             if (!array_key_exists($receiver, $map_receiversVoices) || !array_key_exists($voicemail, $map_receiversVoices[$receiver])) {
                 echo "$voicemail is added to db\n";
                 addVoiceMail($receiver, $voicemail);
             }
         }
+    }
 }
 getReceiversWithTheirVoicesMap();
 
