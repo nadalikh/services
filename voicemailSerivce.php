@@ -56,15 +56,9 @@ function addVoiceMail($receiver, $voicemail){
 
 function checkExistedVoiceForSpecificReceiverInMap($reciver, $voicemail){
     global $map_receiversVoices;
-    foreach($map_receiversVoices[$reciver] as $voice) {
-            echo "\nvoice info $voicemail: \n";
-            echo "\ncheck result: \n";
-            var_dump(in_array($voicemail, $voice));
-            if (in_array($voicemail, $voice)) {
-                return true;
-
-        }
-    }
+    foreach($map_receiversVoices[$reciver] as $voice)
+        if (in_array($voicemail, $voice))
+            return true;
     return false;
 }
 function updateNewVoices(){
@@ -73,12 +67,11 @@ function updateNewVoices(){
     exec("ls /var/www/html/mySweetVoices/default/", $receivers);
     foreach ($receivers as $receiver) {
         $t = getVoicesForReceiver($receiver);
-        foreach ($t as $voicemail) {
+        foreach ($t as $voicemail)
             if (!array_key_exists($receiver, $map_receiversVoices) || !checkExistedVoiceForSpecificReceiverInMap($receiver, $voicemail)) {
-//                echo "$voicemail is added\n";
+                echo "$voicemail is added\n";
                 addVoiceMail($receiver, $voicemail);
             }
-        }
     }
 }
 getReceiversWithTheirVoicesMap();
