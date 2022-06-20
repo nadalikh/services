@@ -51,7 +51,7 @@ function addVoiceMail($receiver, $voicemail){
     $duration = explode('=', $voiceInfos[17])[1];
     $db->query("insert into voicemail (path, sender, receiver, date, duration) values ('$voicemail', '$sender', '$receiver','$date', '$duration')");
     //at the end $map_receiversVoices needs to be updated.
-    updateNewVoices();
+    getReceiversWithTheirVoicesMap();
     echo "in map\n";
     var_dump($map_receiversVoices);
     echo "\n__________________________________________________________________________________\n";
@@ -65,8 +65,6 @@ function updateNewVoices(){
     exec("ls /var/www/html/mySweetVoices/default/", $receivers);
     foreach ($receivers as $receiver) {
         $t = getVoicesForReceiver($receiver);
-        echo "in receivced from getvoice\n";
-        var_dump($t);
         foreach ($t as $voicemail) {
             echo "proccess $voicemail\n";
             if (!array_key_exists($receiver, $map_receiversVoices) || !array_key_exists($voicemail, $map_receiversVoices[$receiver])) {
