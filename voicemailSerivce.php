@@ -61,7 +61,9 @@ function checkExistedVoiceForSpecificReceiverInMap($reciver, $voicemail){
         var_dump($voices);
         foreach ($voices as $info_arr_voice) {
             echo "\nvoice info $voicemail: \n";
-            var_dump($voices);
+            var_dump($info_arr_voice);
+            echo "\ncheck result: \n";
+            var_dump(in_array($voicemail, $info_arr_voice));
             if (in_array($voicemail, $info_arr_voice)) {
                 return true;
             }
