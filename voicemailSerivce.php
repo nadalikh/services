@@ -2,6 +2,8 @@
 <?php
 $map_receiversVoices = array();
 $availableVoice = array();
+date_default_timezone_set("Asia/Tehran");
+
 
 $db = new mysqli("localhost", "root", "expecto-patronum1379", "app");
 if($db->connect_error)
@@ -47,7 +49,9 @@ function addVoiceMail($receiver, $voicemail){
     //get voicemail infos
     getVoiceMailInfoFromFile($receiver, $voicemail, $voiceInfos);
     $sender = explode("-",explode("/",$voiceInfos[10])[1])[0];
-    $date = explode("=", $voiceInfos[12])[1];
+//    $date = explode("=", $voiceInfos[12])[1];
+    $date = date("Y-m-d H:i:s");
+
     $duration = intval(explode('=', $voiceInfos[17])[1]);
     $db->query("insert into voicemail (path, sender, receiver, date, duration) values ('$voicemail', '$sender', '$receiver','$date', '$duration')");
     //at the end $map_receiversVoices needs to be updated.
