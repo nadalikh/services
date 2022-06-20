@@ -27,6 +27,8 @@ function getVoicesForReceiver($receiverCid){
     exec("ls /var/www/html/mySweetVoices/default/".$receiverCid."/INBOX/*.wav", $voices);
     foreach ($voices as &$voice)
         $voice = basename($voice);
+    echo "what recive from getVoicesForReceiver\n";
+    var_dump($voices);
     return $voices;
 
 }
