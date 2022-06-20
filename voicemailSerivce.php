@@ -41,6 +41,7 @@ function getVoiceMailInfoFromFile(&$receiverCid, &$voicemail, &$voiceInfos){
 
 function addVoiceMail($receiver, $voicemail){
     global $db;
+    global $map_receiversVoices;
     $voiceInfos = array();
     //get voicemail infos
     getVoiceMailInfoFromFile($receiver, $voicemail, $voiceInfos);
@@ -50,6 +51,9 @@ function addVoiceMail($receiver, $voicemail){
     $db->query("insert into voicemail (path, sender, receiver, date, duration) values ('$voicemail', '$sender', '$receiver','$date', '$duration')");
     //at the end $map_receiversVoices needs to be updated.
     updateNewVoices();
+    echo "in map\n";
+    var_dump($map_receiversVoices);
+    echo "\n__________________________________________________________________________________\n";
 }
 //function getNewVoiceFromReceiver($reciver){
 //
@@ -58,13 +62,14 @@ function updateNewVoices(){
     global $map_receiversVoices;
     $receivers = array();
     exec("ls /var/www/html/mySweetVoices/default/", $receivers);
-
-    foreach ($receivers as $receiver) {
-        $t = getVoicesForReceiver($receiver);
-        foreach ($t as $voicemail)
-            if (!array_key_exists($receiver, $map_receiversVoices) || !array_key_exists($voicemail, $map_receiversVoices[$receiver]))
+    foreach ($receivers as $receiver)
+        foreach (getVoicesForReceiver($receiver) as $voicemail) {
+            echo "proccess $voicemail\n";
+            if (!array_key_exists($receiver, $map_receiversVoices) || !array_key_exists($voicemail, $map_receiversVoices[$receiver])) {
+                echo "$voicemail is added to db\n";
                 addVoiceMail($receiver, $voicemail);
-    }
+            }
+        }
 }
 getReceiversWithTheirVoicesMap();
 
