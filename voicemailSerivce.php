@@ -53,9 +53,15 @@ function addVoiceMail($receiver, $voicemail){
     //at the end $map_receiversVoices needs to be updated.
     getReceiversWithTheirVoicesMap();
 }
-//function getNewVoiceFromReceiver($reciver){
-//
-//}
+
+function checkExistedVoiceForSpecificReceiverInMap($reciver, $voicemail){
+    global $map_receiversVoices;
+    foreach($map_receiversVoices[$reciver] as $voices)
+        foreach($voices as $info_arr_voice)
+        if(in_array($voicemail, $info_arr_voice))
+            return true;
+    return false;
+}
 function updateNewVoices(){
     global $map_receiversVoices;
     echo "map is :\n";
