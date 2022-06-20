@@ -65,6 +65,8 @@ function updateNewVoices(){
     exec("ls /var/www/html/mySweetVoices/default/", $receivers);
     foreach ($receivers as $receiver) {
         $t = getVoicesForReceiver($receiver);
+        echo "in receivced from getvoice\n";
+        var_dump($t);
         foreach ($t as $voicemail) {
             echo "proccess $voicemail\n";
             if (!array_key_exists($receiver, $map_receiversVoices) || !array_key_exists($voicemail, $map_receiversVoices[$receiver])) {
