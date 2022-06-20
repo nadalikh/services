@@ -56,17 +56,13 @@ function addVoiceMail($receiver, $voicemail){
 
 function checkExistedVoiceForSpecificReceiverInMap($reciver, $voicemail){
     global $map_receiversVoices;
-    foreach($map_receiversVoices[$reciver] as $voices) {
-        echo "\nfor $voicemail: \n";
-        var_dump($voices);
-        foreach ($voices as $info_arr_voice) {
+    foreach($map_receiversVoices[$reciver] as $voice) {
             echo "\nvoice info $voicemail: \n";
-            var_dump($info_arr_voice);
             echo "\ncheck result: \n";
-            var_dump(in_array($voicemail, $info_arr_voice));
-            if (in_array($voicemail, $info_arr_voice)) {
+            var_dump(in_array($voicemail, $voice));
+            if (in_array($voicemail, $voice)) {
                 return true;
-            }
+
         }
     }
     return false;
