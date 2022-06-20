@@ -56,10 +56,17 @@ function addVoiceMail($receiver, $voicemail){
 
 function checkExistedVoiceForSpecificReceiverInMap($reciver, $voicemail){
     global $map_receiversVoices;
-    foreach($map_receiversVoices[$reciver] as $voices)
-        foreach($voices as $info_arr_voice)
-        if(in_array($voicemail, $info_arr_voice))
-            return true;
+    foreach($map_receiversVoices[$reciver] as $voices) {
+        echo "\nfor $voicemail: \n";
+        var_dump($voices);
+        foreach ($voices as $info_arr_voice) {
+            echo "\nvoice info $voicemail: \n";
+            var_dump($voices);
+            if (in_array($voicemail, $info_arr_voice)) {
+                return true;
+            }
+        }
+    }
     return false;
 }
 function updateNewVoices(){
@@ -69,9 +76,6 @@ function updateNewVoices(){
     foreach ($receivers as $receiver) {
         $t = getVoicesForReceiver($receiver);
         foreach ($t as $voicemail) {
-            var_dump(!array_key_exists($receiver, $map_receiversVoices));
-            var_dump(!checkExistedVoiceForSpecificReceiverInMap($receiver, $voicemail));
-            echo "\n";
             if (!array_key_exists($receiver, $map_receiversVoices) || !checkExistedVoiceForSpecificReceiverInMap($receiver, $voicemail)) {
 //                echo "$voicemail is added\n";
                 addVoiceMail($receiver, $voicemail);
