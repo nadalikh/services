@@ -76,5 +76,5 @@ getReceiversWithTheirVoicesMap();
 
 while(true){
     updateNewVoices();
-    sleep(30);
+    sleep(10);
 }
