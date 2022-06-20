@@ -64,13 +64,14 @@ function checkExistedVoiceForSpecificReceiverInMap($reciver, $voicemail){
 }
 function updateNewVoices(){
     global $map_receiversVoices;
-    echo "map is :\n";
-    var_dump($map_receiversVoices);
     $receivers = array();
     exec("ls /var/www/html/mySweetVoices/default/", $receivers);
     foreach ($receivers as $receiver) {
         $t = getVoicesForReceiver($receiver);
         foreach ($t as $voicemail) {
+            var_dump(!array_key_exists($receiver, $map_receiversVoices));
+            var_dump(!checkExistedVoiceForSpecificReceiverInMap($receiver, $voicemail));
+            echo "\n";
             if (!array_key_exists($receiver, $map_receiversVoices) || !checkExistedVoiceForSpecificReceiverInMap($receiver, $voicemail)) {
 //                echo "$voicemail is added\n";
                 addVoiceMail($receiver, $voicemail);
