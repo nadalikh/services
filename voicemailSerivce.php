@@ -47,14 +47,11 @@ function addVoiceMail($receiver, $voicemail){
     //get voicemail infos
     getVoiceMailInfoFromFile($receiver, $voicemail, $voiceInfos);
     $sender = explode("-",explode("/",$voiceInfos[10])[1])[0];
-    $date = intval(explode("=", $voiceInfos[12])[1]);
-    $duration = explode('=', $voiceInfos[17])[1];
+    $date = explode("=", $voiceInfos[12])[1];
+    $duration = intval(explode('=', $voiceInfos[17])[1]);
     $db->query("insert into voicemail (path, sender, receiver, date, duration) values ('$voicemail', '$sender', '$receiver','$date', '$duration')");
     //at the end $map_receiversVoices needs to be updated.
     getReceiversWithTheirVoicesMap();
-    echo "in map\n";
-    var_dump($map_receiversVoices);
-    echo "\n__________________________________________________________________________________\n";
 }
 //function getNewVoiceFromReceiver($reciver){
 //
@@ -66,9 +63,8 @@ function updateNewVoices(){
     foreach ($receivers as $receiver) {
         $t = getVoicesForReceiver($receiver);
         foreach ($t as $voicemail) {
-            echo "proccess $voicemail\n";
             if (!array_key_exists($receiver, $map_receiversVoices) || !array_key_exists($voicemail, $map_receiversVoices[$receiver])) {
-                echo "$voicemail is added to db\n";
+                echo "$voicemail is added";
                 addVoiceMail($receiver, $voicemail);
             }
         }
