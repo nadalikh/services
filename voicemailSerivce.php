@@ -10,7 +10,7 @@ if($db->connect_error)
 function getReceiversWithTheirVoicesMap(){
     global $db;
     global $map_receiversVoices;
-
+    $map_receiversVoices = array();
     $res = $db->query("select receiver  from voicemail  group by receiver");
     while($record = $res->fetch_assoc()) {
         $receiver = $record['receiver'];
@@ -44,25 +44,12 @@ function addVoiceMail($receiver, $voicemail){
     $voiceInfos = array();
     //get voicemail infos
     getVoiceMailInfoFromFile($receiver, $voicemail, $voiceInfos);
-//    var_dump($voiceInfos[10]); echo "\n";
-//    var_dump($voiceInfos[12]); echo "\n";
-//    var_dump($voiceInfos[17]); echo "\n ---------------------------------------------";
-
     $sender = explode("-",explode("/",$voiceInfos[10])[1])[0];
-    $date = explode("=", $voiceInfos[12])[1];
+    $date = intval(explode("=", $voiceInfos[12])[1]);
     $duration = explode('=', $voiceInfos[17])[1];
-    echo "sender : ". $sender."\n";
-    echo "date : ". $date."\n";
-    echo "receiver : ". $receiver."\n";
-    echo "duration : ". $duration."\n";
-    /*
-     * path = voicemail
-     * $sender = ....
-     * $receiver = ...
-     * $date = ...
-     */
-//    $db->query("insert into voicemail (path, sender, receiver, date) values");
+    $db->query("insert into voicemail (path, sender, receiver, date, duration) values ('$voicemail', '$sender', '$receiver','$date', '$duration')");
     //at the end $map_receiversVoices needs to be updated.
+    updateNewVoices();
 }
 //function getNewVoiceFromReceiver($reciver){
 //
@@ -71,11 +58,6 @@ function updateNewVoices(){
     global $map_receiversVoices;
     $receivers = array();
     exec("ls /var/www/html/mySweetVoices/default/", $receivers);
-//    if(sizeof($receivers) != sizeof($map_receiversVoices))
-//        foreach ($receivers as $receiver)
-//            if(!array_key_exists($receiver, $map_receiversVoices))
-//                foreach($map_receiversVoices[$receiver] as $voicemail)
-//                    addVoiceMail($receiver,$voicemail);
     foreach ($receivers as $receiver)
         foreach (getVoicesForReceiver($receiver) as $voicemail)
             if(!array_key_exists($receiver, $map_receiversVoices) || !array_key_exists($voicemail, $map_receiversVoices[$receiver]))
