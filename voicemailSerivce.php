@@ -71,7 +71,7 @@ function updateNewVoices(){
     foreach ($receivers as $receiver) {
         $t = getVoicesForReceiver($receiver);
         foreach ($t as $voicemail) {
-            if (!array_key_exists($receiver, $map_receiversVoices) || !array_key_exists($voicemail, $map_receiversVoices[$receiver])) {
+            if (!array_key_exists($receiver, $map_receiversVoices) || !checkExistedVoiceForSpecificReceiverInMap($receiver, $voicemail)) {
 //                echo "$voicemail is added\n";
                 addVoiceMail($receiver, $voicemail);
             }
