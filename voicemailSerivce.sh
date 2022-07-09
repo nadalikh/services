@@ -1,6 +1,6 @@
 #!/bin/bash
 echo "system entered" 
-php /root/mySweetyBashs/voicemailSerivce.php >>  /var/voicemailServicenkhlogs/serverlog
+php /root/mySweetBashs/services/voicemailSerivce.php >>  /var/voicemailServicenkhlogs/serverlog
 while true
 do
 continue

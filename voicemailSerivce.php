@@ -44,7 +44,6 @@ function getVoiceMailInfoFromFile(&$receiverCid, &$voicemail, &$voiceInfos){
 
 function addVoiceMail($receiver, $voicemail){
     global $db;
-    global $map_receiversVoices;
     $voiceInfos = array();
     //get voicemail infos
     getVoiceMailInfoFromFile($receiver, $voicemail, $voiceInfos);
