@@ -53,7 +53,7 @@ function addVoiceMail($receiver, $voicemail){
 
     $duration = intval(explode('=', $voiceInfos[17])[1]);
     $db->query("insert into voicemail (path, sender, receiver, date, duration) values ('$voicemail', '$sender', '$receiver','$date', '$duration')");
-    exec('sshpass -p "expecto-patronum1379" rsync -r /var/www/html/mySweetVoices/default/'.$receiver.'/INBOX/'.$voicemail.' root@51.77.106.237:/var/www/html/voipApp/public/voices/'.$receiver.'/'.$voicemail);
+    exec('sshpass -p "expecto-patronum1379" rsync -r /var/www/html/mySweetVoices/default/'.$receiver.'/INBOX/'.$voicemail.' root@51.77.106.237:/var/www/html/voipApp/public/voices/'.$receiver.'/');
 
     //at the end $map_receiversVoices needs to be updated.
     getReceiversWithTheirVoicesMap();
