@@ -90,6 +90,7 @@ function updateNewVoices(){
                 addVoiceMail($receiver, $voicemail);
             }
     }
+    getReceiversWithTheirVoicesMap();
 }
 getReceiversWithTheirVoicesMap();
 
