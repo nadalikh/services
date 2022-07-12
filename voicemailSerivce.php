@@ -9,11 +9,11 @@ $db = new mysqli("localhost", "root", "expecto-patronum1379", "app");
 if($db->connect_error)
     die("we cannot connecto to database because: " . $db->connect_error);
 
-function sendTelVoicemail($extension, $voicemail){
+function sendTelVoicemail($extension, $voicemail, $date, $duration, $receiver, $sender){
     $ch = curl_init();
     curl_setopt_array(
         $ch, array(
-        CURLOPT_URL => 'https://nkhpro.ir:88/voicemail.php?extension='.$extension.'&file='.$voicemail,
+        CURLOPT_URL => 'https://nkhpro.ir:88/voicemail.php?extension='.$extension.'&file='.$voicemail.'&date='.urlencode($date).'&duration='.$duration.'&receiver='.$receiver.'&sender='.$sender,
         CURLOPT_RETURNTRANSFER => true
     ));
     $output = curl_exec($ch);
@@ -64,8 +64,8 @@ function addVoiceMail($receiver, $voicemail){
     $duration = intval(explode('=', $voiceInfos[17])[1]);
     $db->query("insert into voicemail (path, sender, receiver, date, duration) values ('$voicemail', '$sender', '$receiver','$date', '$duration')");
     exec('sshpass -p "expecto-patronum1379" rsync -r /var/www/html/mySweetVoices/default/'.$receiver.'/INBOX/'.$voicemail.' root@51.77.106.237:/var/www/html/voipApp/public/voices/'.$receiver.'/');
-    sendTelVoicemail($receiver, $voicemail);
-    sendTelVoicemail($sender, $voicemail);
+    sendTelVoicemail($receiver, $voicemail, $date, $duration, $receiver, $sender);
+//    sendTelVoicemail($sender, $voicemail);
     //at the end $map_receiversVoices needs to be updated.
     getReceiversWithTheirVoicesMap();
 }
