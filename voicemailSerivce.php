@@ -19,6 +19,7 @@ function sendTelVoicemail($extension, $voicemail, $date, $duration, $receiver, $
     $output = curl_exec($ch);
 }
 
+
 function getReceiversWithTheirVoicesMap(){
     global $db;
     global $map_receiversVoices;
